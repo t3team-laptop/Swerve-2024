@@ -14,6 +14,7 @@ import frc.lib.math.Conversions;
 import frc.lib.util.SwerveModuleConstants;
 
 public class SwerveModule {
+    
     public int moduleNumber;
     private Rotation2d angleOffset;
 
@@ -21,6 +22,16 @@ public class SwerveModule {
     private TalonFX mDriveMotor;
     private CANcoder angleEncoder;
 
+    private SwerveModuleState currentState = new SwerveModuleState(
+            Conversions.RPSToMPS(mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference), 
+            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
+        );
+
+    private SwerveModulePosition currentPosition = new SwerveModulePosition(
+            Conversions.rotationsToMeters(mDriveMotor.getPosition().getValue(), Constants.Swerve.wheelCircumference), 
+            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
+        );
+    
     private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
     /* drive motor control requests */
@@ -89,4 +100,11 @@ public class SwerveModule {
             Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
         );
     }
+
+    public void setTargetState(SwerveModuleState targetState) {
+        // Optimize the state
+        currentState = SwerveModuleState.optimize(targetState, currentState.angle);
+  
+        currentPosition = new SwerveModulePosition(currentPosition.distanceMeters + (currentState.speedMetersPerSecond * 0.02), currentState.angle);
+      }
 }
