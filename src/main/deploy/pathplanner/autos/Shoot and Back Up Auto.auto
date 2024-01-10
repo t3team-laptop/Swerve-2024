@@ -5,7 +5,7 @@
       "x": 1.3458891115313096,
       "y": 5.506229284063506
     },
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "command": {
     "type": "sequential",

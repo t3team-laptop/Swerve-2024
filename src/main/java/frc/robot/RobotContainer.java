@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableBuilderImpl;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,14 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.PathPlannerTrajectory;
-import com.pathplanner.lib.util.PIDConstants;
 
 
 /**
@@ -46,11 +38,6 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
 
     private final SendableChooser<Command> autoChooser;
-
-    private static Map<String, Command> eventMap = new HashMap<>();
-    {
-        
-    }
 
 
 
@@ -80,11 +67,8 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
-        SmartDashboard.putData("Example Auto", new PathPlannerAuto("Shoot and Back Up Auto"));
-        
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
-        autoChooser.addOption("Example Auto", new PathPlannerAuto("Shoot and Back Up Auto"));
     }
 
 
