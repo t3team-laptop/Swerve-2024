@@ -72,8 +72,8 @@ public final class Constants {
 
         /* Drive Motor PID Values */
         public static final double driveKP = 0.12; //TODO: This must be tuned to specific robot
-        public static final double driveKI = 0.0;
-        public static final double driveKD = 0.0;
+        public static final double driveKI = 0.1;
+        public static final double driveKD = 0.1;
         public static final double driveKF = 0.0;
 
         /* Drive Motor Characterization Values From SYSID */
@@ -133,8 +133,8 @@ public final class Constants {
         }
 
         public static HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-            new PIDConstants(Constants.AutoConstants.kPXController, 0, 0),
-            new PIDConstants(Constants.AutoConstants.kPThetaController, 0, 0),
+            new PIDConstants(0.12, 0.1, 0.1),
+            new PIDConstants(chosenModule.angleKP, chosenModule.angleKI, chosenModule.angleKD),
             AutoConstants.kMaxSpeedMetersPerSecond, 
             .5, // Drive base radius (distance from center to furthest module) 
             new ReplanningConfig()
@@ -147,7 +147,7 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
     
-        public static final double kPXController = 1;
+        public static final double kPXController = .12;
         public static final double kPYController = 1;
         public static final double kPThetaController = 1;
     

@@ -22,15 +22,9 @@ public class SwerveModule {
     private TalonFX mDriveMotor;
     private CANcoder angleEncoder;
 
-    private SwerveModuleState currentState = new SwerveModuleState(
-            Conversions.RPSToMPS(mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference), 
-            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
-        );
+    private SwerveModuleState currentState;
 
-    private SwerveModulePosition currentPosition = new SwerveModulePosition(
-            Conversions.rotationsToMeters(mDriveMotor.getPosition().getValue(), Constants.Swerve.wheelCircumference), 
-            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
-        );
+    private SwerveModulePosition currentPosition;
     
     private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
@@ -58,6 +52,17 @@ public class SwerveModule {
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID, "cani");
         mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
         mDriveMotor.getConfigurator().setPosition(0.0);
+
+        currentState = new SwerveModuleState(
+            Conversions.RPSToMPS(mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference), 
+            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
+        );
+
+        currentPosition = new SwerveModulePosition(
+            Conversions.rotationsToMeters(mDriveMotor.getPosition().getValue(), Constants.Swerve.wheelCircumference), 
+            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue())
+        );
+
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
